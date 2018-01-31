@@ -1,11 +1,11 @@
 function main()
 {
+
+
     //retrieve canvas element
     var canvas = document.getElementById('webgl');
     var gl = WebGLUtils.setupWebGL(canvas);
-
-    var selectedFile = document.getElementById('input').files[0];
-
+    var inputFile;
     //Get rendering context
     if(!gl)
     {
@@ -13,6 +13,9 @@ function main()
         return;
     }
 
+    // function drawingData(){
+    //
+    // }
     //initialize shaders
     program = initShaders(gl, "vshader", "fshader");
     gl.useProgram(program);
@@ -32,7 +35,11 @@ function main()
     gl.enableVertexAttribArray(vPosition);
 
     //define colors of points
-    var colors = [0.0, 0.0, 0.0, 1.0];
+    var colors = [];
+
+    for(i = 0; i<points.length; i++){
+        colors[i] = [0.0, 0.0, 0.0, 1.0];
+    }
 
     var cBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
@@ -45,7 +52,34 @@ function main()
     //set clear color
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
+    //clear color buffer
     gl.clear(gl.COLOR_BUFFER_BIT);
+
+    //draw
     gl.drawArrays(gl.POINTS, 0, points.length);
+
+
+    var fileString="";
+    var file;
+    document.getElementById('input').addEventListener('change', receiveFile, false);
+
+
+    function receiveFile(event)
+    {
+        file = event.target.files[0]; //file
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function(e){
+            fileString = reader.result; //Actual string
+            parseFile(fileString);
+            console.log(points);
+        }
+
+    }
+
+    function parseFile(string)
+    {
+        points=fileString.trim().split(/\s+/);
+    }
 
 }
