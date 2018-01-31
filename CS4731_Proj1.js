@@ -30,7 +30,7 @@ function main()
     gl.enableVertexAttribArray(vPosition);
 
     //define colors of points
-    var colors = [];
+    var colors = [0.0, 0.0, 0.0, 1.0];
 
     var cBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
@@ -41,34 +41,39 @@ function main()
     gl.enableVertexAttribArray(vColor);
 
     //set clear color
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
-    //clear canvas by clearing color buffer
     gl.clear(gl.COLOR_BUFFER_BIT);
-
-    //draw point
     gl.drawArrays(gl.POINTS, 0, points.length);
-    gl.drawArrays(gl.LINES, 0, points.length);
-    gl.drawArrays(gl.LINE_STRIP, 0, points.length);
-    gl.drawArrays(gl.LINE_LOOP, 0, points.length);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, points.length);
-
-    window.onclick = function(event) {
-        //gl.clear(gl.COLOR_BUFFER_BIT);
-    }
 
 
-    window.onkeypress = function(event)
-    {
-        var key = String.fromCharCode(event.keyCode);
-        switch(key)
-        {
-            case 'a':
-                canvas.width = 200;
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                gl.drawArrays(gl.TRIANGLES, 0, points.length);
-                window.alert('Key pressed is ' + key);
-                break;
-        }
-    }
+    // window.onclick = function(event) {
+    //     var i = index;
+    //     x=2*event.clientX/canvas.width-1;
+    //     y=2*(canvas.height-event.clientY)/canvas.height-1;
+    //     var pts = [x, y];
+    //     console.log(x, y);
+    //     points.push(pts);
+    //
+    //     gl.bindBuffer(gl.ARRAY_BUFFER, pBuffer);
+    //     gl.bufferSubData(gl.ARRAY_BUFFER, i, new Float32Array(pts));
+    //     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+    //     gl.bufferSubData(gl.ARRAY_BUFFER, i, new Float32Array(colors));
+    //     index++;
+    // }
+    //
+    // window.onkeypress = function(event)
+    // {
+    //     var key = String.fromCharCode(event.keyCode);
+    //     switch(key)
+    //     {
+    //         case 'a':
+    //             canvas.width = 200;
+    //             gl.clear(gl.COLOR_BUFFER_BIT);
+    //             gl.drawArrays(gl.TRIANGLES, 0, points.length);
+    //             window.alert('Key pressed is ' + key);
+    //             break;
+    //     }
+    // }
+
 }
